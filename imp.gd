@@ -19,9 +19,12 @@ const friendly_names = \
 		}
 
 signal input_mode_changed(mode)
+signal input_mode_waiting
 var mode : int = WAITING:
 	get:
 		return mode
 	set(value):
 		mode = value
-		emit_signal("input_mode_changed",value)
+		input_mode_changed.emit(value)
+		if value == WAITING: input_mode_waiting.emit()
+		#emit_signal("input_mode_changed",value)
